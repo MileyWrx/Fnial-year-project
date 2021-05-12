@@ -1,0 +1,45 @@
+
+
+
+\chapter{Experimental Design}
+\label{chapter3}
+This chapter will cover the implementation of three most popular algorithms, as well as the experiments conducted.
+
+\section{Improving Reliability}
+\par In order to test and campare the performance of those algorithms, the author will apply each of them on five existing functions, use the algorithm to find the minimum value, and make comparison with real minimum value of the functions. 
+
+
+\begin{table}[ht!]
+	\centering
+	\begin{tabular}{c c c }
+		\hline 
+		Function name & Num of dimensions & Minimum value \\ 
+		\hline 
+		Sixhump & 2 & -1.0316 \\ 		 
+		Sasena  & 2 & 1.4565 \\ 		 
+		Ellipsoid  & 10 & 0 \\ 
+		Rosenbrock  &20   & 0  \\
+		Ackley   &  20  & 0		\\
+		\hline 
+	\end{tabular} 
+\end{table}
+
+The author made following efforts to make the experiments convincing and credible:
+\begin{enumerate}
+	\item Used functions with mathematical expression, instead of black box functions. Due to the fact that, minimum value of these functionsare already known, and thus the comprison between real minimum value and minimum found by alrorithms will based on hard facts. As a result, it will be more scientific.
+	\item Used functions of different varieties (e.g.: some are exponential, some has the shape of a ellipsoid, some is widely used for Kriging Approximations), which ensured the breath of experiment.
+	\item Used average performance as result. As sample points are selected randomly, which will affect the input data, the author conducted each experiment for 10 times, and calculate the average value of outcomes.
+	\item Comprehensive attempts of $q$. Despite knowing that larger batch size will improve the performance, for each algorithm, the author set the batch size to be 1,2,4,8, and made experiments separately. This helps the author to explore marginal effect of improving $q$.
+\end{enumerate}
+
+\section{Experiment Process}
+The testing process of each algorithm including the following steps: 
+\begin{enumerate}
+\item Initializing: Before testing, upper and lower bound of the function was set. Then the author set dimension of the random dataset to be selected. Then, the threshold number to stop iteration was set to 20.
+\item Selecting sample points: as this is a controlled experiment, we need to omit the influence of irrelevant variables. Thus, for each algorithm, the same method, Latin hypercube sampling (LHS) was applied.
+\item Apply the surrogate model and acquisition function: In this experiment, Kriging toolbox was used, where zero order polynomial was used as regression model, and gaussian kernel (as mentioned in 2.1.3) was used as kernel function.
+\item Trying different algorithms: For each function, different algorithms was applied, in order to select a batch of points, and update the model.
+\end{enumerate}
+
+
+

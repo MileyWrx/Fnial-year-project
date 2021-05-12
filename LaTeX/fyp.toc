@@ -1,0 +1,42 @@
+\contentsline {chapter}{\numberline {1}Project Management and Planning}{3}{chapter.1}% 
+\contentsline {section}{\numberline {1.1}Report structure}{3}{section.1.1}% 
+\contentsline {section}{\numberline {1.2}Aim}{3}{section.1.2}% 
+\contentsline {section}{\numberline {1.3}Objectives}{3}{section.1.3}% 
+\contentsline {section}{\numberline {1.4}Deliverables}{4}{section.1.4}% 
+\contentsline {section}{\numberline {1.5}Schedule}{4}{section.1.5}% 
+\contentsline {chapter}{\numberline {2}Background}{5}{chapter.2}% 
+\contentsline {section}{\numberline {2.1}Gaussian Process Model}{5}{section.2.1}% 
+\contentsline {subsection}{\numberline {2.1.1}Brief}{5}{subsection.2.1.1}% 
+\contentsline {subsection}{\numberline {2.1.2}Gaussian Process}{5}{subsection.2.1.2}% 
+\contentsline {subsection}{\numberline {2.1.3}Kernel Function}{6}{subsection.2.1.3}% 
+\contentsline {subsection}{\numberline {2.1.4}Gaussian Process Regression}{7}{subsection.2.1.4}% 
+\contentsline {section}{\numberline {2.2}Bayesian Optimization}{8}{section.2.2}% 
+\contentsline {subsection}{\numberline {2.2.1}Brief}{8}{subsection.2.2.1}% 
+\contentsline {subsection}{\numberline {2.2.2}Surrogate Model}{8}{subsection.2.2.2}% 
+\contentsline {subsection}{\numberline {2.2.3}Acquisition Function}{8}{subsection.2.2.3}% 
+\contentsline {subsection}{\numberline {2.2.4}Process}{9}{subsection.2.2.4}% 
+\contentsline {subsection}{\numberline {2.2.5}Useful Conditions}{10}{subsection.2.2.5}% 
+\contentsline {section}{\numberline {2.3}Batched Bayesian Optimization}{11}{section.2.3}% 
+\contentsline {chapter}{\numberline {3}Experimental Design}{13}{chapter.3}% 
+\contentsline {section}{\numberline {3.1}Improving Reliability}{13}{section.3.1}% 
+\contentsline {section}{\numberline {3.2}Experiment Process}{13}{section.3.2}% 
+\contentsline {chapter}{\numberline {4}Multi-Model Expected Improvement}{15}{chapter.4}% 
+\contentsline {section}{\numberline {4.1}Method}{15}{section.4.1}% 
+\contentsline {section}{\numberline {4.2}Experiment 1.1}{16}{section.4.2}% 
+\contentsline {section}{\numberline {4.3}Experiment 1.2 and 1.3}{17}{section.4.3}% 
+\contentsline {section}{\numberline {4.4}Conclusion of Experiment 1}{18}{section.4.4}% 
+\contentsline {chapter}{\numberline {5}Kriging Believer}{21}{chapter.5}% 
+\contentsline {section}{\numberline {5.1}Method}{21}{section.5.1}% 
+\contentsline {section}{\numberline {5.2}Experiment}{21}{section.5.2}% 
+\contentsline {section}{\numberline {5.3}Conclusion}{21}{section.5.3}% 
+\contentsline {chapter}{\numberline {6}Constant Liar}{25}{chapter.6}% 
+\contentsline {section}{\numberline {6.1}Method}{25}{section.6.1}% 
+\contentsline {section}{\numberline {6.2}Experiments}{25}{section.6.2}% 
+\contentsline {section}{\numberline {6.3}Conclusion}{25}{section.6.3}% 
+\contentsline {chapter}{\numberline {7}Self Appraisal}{29}{chapter.7}% 
+\contentsline {section}{\numberline {7.1}Timeline}{29}{section.7.1}% 
+\contentsline {section}{\numberline {7.2}Obstacles}{29}{section.7.2}% 
+\contentsline {chapter}{References}{30}{section.7.2}% 
+\contentsline {chapter}{Appendices}{33}{section*.3}% 
+\contentsline {chapter}{\numberline {A}External Deliverable}{35}{Appendix.1.A}% 
+\contentsline {chapter}{\numberline {B}Learning Material}{37}{Appendix.1.B}% 

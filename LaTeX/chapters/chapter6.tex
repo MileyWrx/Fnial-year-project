@@ -1,0 +1,24 @@
+\chapter{Constant Liar}
+\label{chapter6}
+
+\section{Method}
+Constant Liar is a similar way as Kriging Believer, in layman's terms this algorithm also has the method of using a `fake` point at each iteration, and calculate the real value at `fake` points after we iterate through each iteration inside one batch. But Constant Liar works even more direct: instead of using a model to evaluete those `fake` points,  originator of this algorithm tend to choose real values (e.g.: maximum value ) in sample points, and use these values directly as `fake` points. \cite{Ginsbourger_2010} In the paper, Ginsbourger Riche et al tried to use sample points that has maximum value, which turned to have a great performance. In this experiment, the author will try maximum value, minimum value, and average value.
+
+\section{Experiments}
+The author tried maximum value, minimum value, and average value of sample points as the value used as `fake` point:
+\begin{figure}[t]
+	\centering
+	\includegraphics[scale=1.45]{03avg.png}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[scale=1.4]{03max.png}
+\end{figure}
+\begin{figure}[t]
+	\centering
+	\includegraphics[scale=1.3]{03min.png}
+\end{figure}
+
+\section{Conclusion}
+In this experiment, consider the performance of the algorithm on all the five function sit tiurs out that using average value of sample points directly as `fake` points has the best performance.

@@ -1,0 +1,50 @@
+% \chapter{Kriging Believer and Constant Liar}
+\chapter{Multi-Model Expected Improvement}
+\section{Method}
+\label{chapter4}
+\justifying
+From Chapter 2, it can be known that the promising point is the point where Experiment Improvement function reaches its maximum. Therefore, to select a batch of ($q$) points at one iteration. A. S´obester, S.J. Leary et al \cite{Sobester_2004} put forward an algorithm for selecting the top $q$ points where experiment improvement (EI) function reaches its top $q$ maximum value. 
+\par From figure 2.4, it can be noticed that EI function has many local maximum values:
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.2]{BayesianOptimization.png}
+	\caption{An example, visualizing bayesian optimization}
+	\label{fig:label}
+\end{figure}
+
+
+This kind of shape brings the idea that when searching the next point to be evaluated, the ``peak`` on EI function, whose local maximum was already selected can be excluded, and when selecting the next point, only other peaks need to be searched. 
+
+
+To implement this idea, an algorithm was developed: to set a constraint at the first ``peak'', and ignore points within the constraint when searching. From pre-existing works, we know that there is an relationship between constraint and difference between lower and upper bound:
+\begin{equation}
+C = \theta \times (U - L)
+\end{equation}
+where $C$ is the constraint, $U$ is the upper bound and $L$ is the lower bound. The author tried $\theta$ to be 0.001, 0.0001, 0.00001, with a changing $q$ on each function:
+~\\
+\section{Experiment 1.1}
+Setting $q = 2$ on five functions, yields $\theta = 0.0001$ brings the best performance on all the five functions:
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=1.3]{01q2.png}
+\end{figure}
+
+\section{Experiment 1.2 and 1.3}
+In experiment 2 and 3, setting $q = 4$ and $q = 8$ respectively on five functions, also yields $\theta = 0.0001$ brings the best performance on all the five functions. However, for function $Sixhump$, $Sasena$ and $Ellipsoid$, whose dimensions were set to be lower (2, 2 and 10 respectively), the speed of convergence got diamatically faster: the three lines on the plot almost coinside with each other.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=1.27]{01q4.png}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[scale=1.22]{01q8.png}
+\end{figure}
+
+\section{Conclusion of Experiment 1}
+From experiment 1, conclusion can be drawn that:
+\par 1.For the constraint we set in equation(3.1), $\theta = 0.0001$ brings the best performance.
+\par 2. As batch size goes up, the speed of convergence also goes faster, especially in functions with imput data of lower dimensions.
+
+

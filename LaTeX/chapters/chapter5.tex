@@ -1,0 +1,28 @@
+\chapter{Kriging Believer}
+\label{chapter5}
+\justifying
+\section{Method}
+Due to the fact that the objective function is expensive to calculate, again look at the flowchart:
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=1.0]{traditional.png}
+	\caption{An iteration of traditional bayesian optimization}
+	\label{fig:label}
+\end{figure}
+\par before putting the newly selected point to the set of sample points in step 3 (at the flowchart), the value of objective function at this point needs to be calculated. Calculating these values one by one will take a lot of time. Thus, we need to calculate them in parallel.
+\par Nevertheless, we have known that bayesian optimization contains iterations, each iteration base on the past. That is, the value obtain in step 3 is the value to be used in step 1 in next iteration, we can't execute step 1 in the next iteration without a new sample point being added. To tackle this problem, Mocus \cite{Mockus_1991} put forward an algorithm:
+\par using the using the outcome of Gaussian Process model instead of the real value of objective function as selected points, and then in step 3 we calculate the real value in parallel. Which means that, within a batch, in step 3 of each iteration we use the value that evaluated by GP model as the `fake` point, and use that 'fake' point in the next iteration. After all the 'fake' points in that iteration were selected, we then calculate the objective function's real value at these points in parallel.
+\par This algorithm saves time not only because we calculate those points in parallel, but also due to the fact that Gaussian Process model is cheap to evaluate.
+
+\section{Experiment}
+In this experiment, the author also tried the value of $q$ to be 1,2,4,and 8. But at this time, the author draw a plot for each function, withi different lines representing the outcome of different $q$. Uncer this circumstance, the author can not only compare the influence on different functions, but also can compare the influence of q in each function
+\section {Conclusion}
+This experiment gives the conclusion from a straight-forward way. From each seperate graph, it is also obvious that, an increasing $q$ leads to a fast convergence speed.
+\par As for the accuracy, Kriging Believer is accurate on function Sixhump, Sasena and Ellipsoid. But on function Rosenbrock and Ackley, it turned out that it is not accurate sometimes, and it is amazing to find out value of $q$ will even influence accuracy at these two functions.
+\begin{figure}[t]
+	\centering
+	\includegraphics[scale=1.2]{KB.png}
+\end{figure}
+~\\
+\newpage
+

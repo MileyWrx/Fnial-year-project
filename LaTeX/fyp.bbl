@@ -1,0 +1,45 @@
+\begin{thebibliography}{1}
+
+\bibitem{Barber_2012}
+D.~Barber.
+\newblock {\em Bayesian reasoning and machine learning}.
+\newblock Cambridge University Press, 2012.
+
+\bibitem{Ginsbourger_2010}
+D.~Ginsbourger, R.~Le~Riche, and L.~Carraro.
+\newblock {\em Kriging Is Well-Suited to Parallelize Optimization}, volume~2 of
+  {\em Adaptation Learning and Optimization}, book section~6, pages 131--162.
+\newblock Springer Berlin Heidelberg, 2010.
+
+\bibitem{Mockus_1991}
+J.~Mockus and L.~Mockus.
+\newblock Bayesian approach to global optimization and application to
+  multiobjective and constrained problems.
+\newblock {\em Journal of optimization theory and applications},
+  70(1):157--172, 1991.
+
+\bibitem{Rasmussen_2006}
+C.~E. Rasmussen and C.~K. Williams.
+\newblock {\em Gaussian processes for machine learning}.
+\newblock The MIT Press, Cambridge, MA, USA, 2006.
+
+\bibitem{Eric_2018}
+E.~Schulz, M.~Speekenbrink, and A.~Krause.
+\newblock A tutorial on gaussian process regression: Modelling, exploring, and
+  exploiting functions.
+\newblock {\em Journal of Mathematical Psychology}, 85:1--16, 2018.
+
+\bibitem{Schulz_2018}
+E.~Schulz, M.~Speekenbrink, and A.~Krause.
+\newblock A tutorial on gaussian process regression: Modelling, exploring, and
+  exploiting functions.
+\newblock {\em Journal of Mathematical Psychology}, 85:1--16, 2018.
+
+\bibitem{Sobester_2004}
+A.~S\'{o}bester, S.~J. Leary, and A.~J. Keane.
+\newblock A parallel updating scheme for approximating and optimizing high
+  fidelity computer simulations.
+\newblock {\em Structural and Multidisciplinary Optimization}, 27(5):371--383,
+  2004.
+
+\end{thebibliography}

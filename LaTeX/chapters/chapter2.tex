@@ -1,0 +1,205 @@
+\chapter{Background}
+\label{chapter2}
+\justifying
+% \section{Brief}
+In the engineering field, optimization problems are omnipresent. And in real life, this kind of optimization problems have objective functions that are expensive to evaluate, for example, conducting geological exploration for petrol or natural gas at given geographic coordinates, evaluating the efectiveness of a certain composition taken from a chemical search space, and adjusting the hyperparamenter of a neutrual network that has many layers (Krasser, 2018). For an expensive objective function, it is vital to approach the optimal solution in an efficient way.
+\par Bayesian optimization is a proven method, it iteratively select a new point and evaluate the objective function using the existing points (newly-selected point included), then update the probabilistic surrogate model before the next iteration.\cite{Barber_2012}
+\par In this chapter, knowledge related to this project will be introduced in a bottom-up approach. Hope that the reader can get to know essentiall background of my research topic in this way.
+
+\section{Gaussian Process Model}
+
+\subsection{Brief}
+In the field of probability theory and statistics, Gaussian process is a stochastic process that any finite collection of random variables has a joint distribuiton that is multivariate Gaussian\cite{Rasmussen_2006}.
+\par In many machine learning algorithms which involves a Gaussian process, the Gaussian process indicates the distribution of function. With a kernel function (will be covered in 2.1.3) defining the similarity between point in training dataset and predicted point, we make predictions and train the model.
+%
+\subsection{Gaussian Process}
+
+Given any point $\mathbf{x} \in \mathbf{R}^{ d}$ in Gaussian process, there is an assigned corresponding random variable $f\left(\mathbf{x}\right)$, where the joint probability distribution of every finite subset of random variables $f\left(\mathbf{x}_{1}\right),$ 
+$f\left(\mathbf{x}_{2}\right), \cdots, f\left(\mathbf{x}_{N}\right)$ will conform to Gaussian distribution.\\
+
+Let
+\begin{center} 
+	$\mathbf{f}=\left(f\left(\mathbf{x}_{\mathbf{1}}\right), f\left(\mathbf{x}_{\mathbf{2}}\right), \cdots, f\left(\mathbf{x}_{\mathbf{N}}\right)\right)$, \quad and \quad $ \mathbf{X}=\left(\begin{array}{c}\mathbf{x}_{1} \\ \mathbf{x}_{2} \\ \cdots \\ \mathbf{x}_{N}\end{array}\right)$
+\end{center}
+
+Then the multivariate Gaussian distribution can be written as 
+\begin{equation}
+p(\mathbf{f}\mid\mathbf{X})=\mathcal{N}(\mathbf{f} \mid \boldsymbol{\mu}, \mathbf{K})
+\end{equation}
+with $\mu$ representing the mean vector 
+$ m\left(X\right) = \left(m\left(\mathbf{x}_{\mathbf{1}}\right), m\left(\mathbf{x}_{\mathbf{2}}\right), \cdots, m\left(\mathbf{x}_{\mathbf{N}}\right)\right)$ and $\mathbf{K}$ representing the covariance matrix. In the field of machine learning, m$\left(X\right)$ is usually set to be zero because we assume that the arbitrarily can be well-modeled by Gaussian process itself.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{GP.jpg}
+	\caption{A function with its gaussian process}
+	\label{fig:label}
+\end{figure}
+
+\subsection{Kernel Function}
+Given a multivariate Gaussian distribution, the covariance matrix $\mathbf{K}$ in equation (1) can be denoted as $K_{i j}=\kappa\left(\mathbf{x}_{i}, \mathbf{x}_{j}\right)$, where each element in the matrix is the covariance of $\mathbf{x}_{i}$ and $\mathbf{x}_{j}$, and $\kappa$ is the covariance function, also called kernel function.
+\par The value of kernel function will reflect similarity between two points, $\mathbf{x}_{i}$ and $\mathbf{x}_{j}$: if the kernal function decided that $\mathbf{x}_{i}$ and $\mathbf{x}_{j}$ are similar, then we can infer that $f\left(\mathbf{x}_{\mathbf{1}}\right)$ and $f\left(\mathbf{x}_{\mathbf{2}}\right)$ are also similar. Thus, selection of kernel function defines the behaviour and performance of gaussian process.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.45]{kernel.png}
+	\caption{Using different kernels on prior function distribution of the Gaussian process \cite{Eric_2018}}
+	\label{fig:label}
+\end{figure}
+\par A kernel function can define basic aspects such as process' stationarity, isotropy, smoothness and periodicity$^{[3][4]}$. However, we are not using different kernel functions, as it is not central to this project. Instead, for all the experiments of this project, the \emph{dace} Kriging toolbox will be used, where the kernel function was designed to be Gaussian kernel function.
+
+\subsection{Gaussian Process Regression}
+Gaussian process regression is a non-parameteric model that uses the Gaussian process prior to conduct regression analysis on given dataset.
+\par To have a graphical overview, the author first use an example \cite{Eric_2018}: There are samples from a Gaussian process prior and posterior, where green lines indicate samples from the gaussian process, dots indicate past observations, and the red triangle indicates the next point to be selected.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.8]{GP-regression.png}
+	\caption{Gaussian process regression, an external example$^{[7]}$}
+	\label{fig:label}
+\end{figure}
+\par Given that the Gaussian process prior is $p(\mathbf{f}\mid\mathbf{X})$, the posterior of Gaussian process can easily yield as we know the corresponding $\mathbf{y}$. The posterior can be deoted as $\operatorname{p}\left(\mathbf{f}_{*} \mid \mathbf{X}_{*}, \mathbf{X}, \mathbf{y}\right)$, where $\mathbf{X}_{*}$ is the new input and $\mathbf{f}_{*}$ is our new prediction.
+
+\par As the prior and posterior are both Gaussian, random distribution of the prodiction $\mathbf{X}_{*}$ is still a Gaussian distribution, denoted as:\\
+\begin{equation}
+p\left(\mathbf{f}_{*} \mid \mathbf{X}_{*}, \mathbf{X}, \mathbf{y}\right)=\int p\left(\mathbf{f}_{*} \mid \mathbf{X}_{*}, \mathbf{f}\right) p(\mathbf{f} \mid \mathbf{X}, \mathbf{y}) d \mathbf{f} = \mathcal{N}\left( \mathbf{\mu_{*}, \Sigma_{*}}\right)
+\end{equation}
+where $\mathbf{\mu_{*}}$ represents the expectation vector:
+\begin{equation}
+\mu_{*}=\mathbf{K}_{*}^{T} \mathbf{K}_{y}^{-1} \mathbf{y}
+\end{equation}
+and $\mathbf{\Sigma_{*}}$ represents the covariance matrix:
+\begin{equation}
+\Sigma_{*}=\mathbf{K}_{* *}-\mathbf{K}_{*}^{T} \mathbf{K}_{y}^{-1} \mathbf{K}_{*}
+\end{equation}
+
+As the joint distribution of collections of finite random variable in a Gaussian process is a Gaussian distribution, the joint distribution of $\mathbf{y}$ and $\mathbf{f}_{*}$ still follows Gaussian distribution:
+
+\begin{equation}
+\left(\begin{array}{l}\mathbf{y} \\ \mathbf{f}_{*}\end{array}\right) \sim \mathcal{N}\left(\mathbf{0},\left(\begin{array}{cc}\mathbf{K}_{y} & \mathbf{K}_{*} \\ \mathbf{K}_{*}^{T} & \mathbf{K}_{* *}\end{array}\right)\right)
+\end{equation}
+
+where 
+\begin{equation}
+\mathbf{K}_{y}=\kappa(\mathbf{X}, \mathbf{X})+\sigma_{y} I
+\end{equation}
+\begin{equation}
+\mathbf{K}_{*}=\kappa(\mathbf{X}, \mathbf{X}_{*})
+\end{equation}
+\begin{equation}
+\mathbf{K}_{**}=\kappa(\mathbf{X}_{*}, \mathbf{X}_{*})
+\end{equation}
+In equation (6), $I$ is the identity matrix of size $N \times N$, and $\sigma_{y}$ is the noise to the diagonal of $\mathbf{K}_{y}$. In this project, to simplify, we assume that there's no noise and $\sigma_{y}$ was set to be 0.
+
+
+\section{Bayesian Optimization}
+\subsection{Brief}
+In the field of machine learning, optimization problems are everywhere. Many optimization problems have the objective function that is a black box function.
+It is hard to evaluate a black box function $f\left(\mathbf{x}\right)$ that only input and output are known. Therefore, we need to focus on a model that is somehow 'forseeable', and use that model to approximate the objective function.
+
+\par Bayesian optimization is applied typically in optimization problems like this:
+$\max _{x \in A} f(x)$, 
+with $A$ representing a set of points whose membership can easily be evaluated
+\par Method of bayesian optimization is to assume the objective function to be a random function, construct a probability model over it, and use the model to select the promising point that most likely to bring hugest improvement to the model in the next evaluation. Then in the next loop we add that point to the set of sample points and update the model... Going round and round till it meet the condition to stop.
+
+
+\subsection{Surrogate Model}
+A surrogate model is the model we used to find the next sample point $x_{t}=\arg \max _{x} \alpha(x)$ where $x_{t}$ represents the acquisition function to be covered next section.
+\par In this project, we use the Gaussian process model as surrogate model. By using the pre-defined prior over the objective function, Gaussian process allows us to use the pre-defined prior to incorporate prior beliefs (e.g.: shape) about the objective function$^{[8]}$.(Krasser, 2019) And in a Gaussian process, the posterior can be used to make prediction of the mext promising point in search space that is likely to yield bigest improvement.
+\par Gaussian process model is an efficient surrogate model, as the posterior of Gaussian process is cheap to evaluate.
+
+\subsection{Acquisition Function}
+Acquisition function acts like a 'measure' that used to select the next promising point (i.e.: point that most likely to bring huge improvement).
+\par In general, there are two strategies$^{[9]}$ to select a new point:
+\begin{itemize}
+	\item[$\bullet$]Explore: find a new point on the function, this way is helpful to get an accurate point. 
+	\item[$\bullet$]Exploit: make selection near the already selected points, this way is helpful to find max value.
+\end{itemize}
+\par The above two strategies are contradict to each other, thus we need to make trade-off and find a balance between them.
+\par In this project, we will use the Experiment Improvement function, as it not only has an analytic form that is easy to compute, but also has good practical performance.
+\par As what it was called, experiment improvement function elect the point with the greatest expected improvement as the next sample point, that is:
+\begin{equation}
+x_{t+1}=\arg \min _{x} \mathbb{E}\left(\left\|h_{t+1}(x)-f\left(x^{*}\right)\right\| \mid \mathcal{D}_{t}\right)
+\end{equation}
+\par where $f$ represents the objective function, $h_{t+1}$ represents the mean of posterior of the surrogate model at step $t+1$. And $\mathcal{D}_{t}=\left\{\left(x_{i}, f\left(x_{i}\right)\right)\right\}, \forall x \in x_{1: t}$ is the sample used for training, and $x^*$ is the place where the function $f$ reaches its maximum value.
+\par To select the point that near to the max point of objective function, we apply Mockus's way:
+\begin{equation}
+x_{t+1}=\arg \max _{x} \mathbb{E}\left(\max \left\{0, h_{t+1}(x)-f\left(x^{+}\right)\right\} \mid \mathcal{D}_{t}\right)
+\end{equation}
+\par where $f\left(x^{+}\right)$ represents the point among we already selected, where the function value reaches max.
+\par Using gaussian process as surrogate model, yields:
+\begin{equation}
+\begin{aligned}
+E I(x) &=\left\{\begin{array}{ll}
+\left(\mu_{t}(x)-f\left(x^{+}\right)-\epsilon\right) \Phi(Z)+\sigma_{t}(x) \phi(Z), & \text { if } \sigma_{t}(x)>0 \\
+0 & \text { if } \sigma_{t}(x)=0
+\end{array}\right.
+\end{aligned}
+\end{equation}
+\begin{equation}
+\begin{aligned}
+Z &=\frac{\mu_{t}(x)-f\left(x^{+}\right)-\epsilon}{\sigma_{t}(x)}
+\end{aligned}
+\end{equation} 
+\par where $\Phi(Z)$ represents cumulative density function (CDF) and $\phi(Z)$ represents Probability density function (PDF).
+
+
+
+\subsection{Process}
+The following pseudocode briefly introduced the process of Sequantial Model-Based Optimization, which is the simplest form of Bayesian optimization:
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{SMBO.png}
+\end{figure}
+\par where $f$ represents the black box function, $X$ represents the domain of $f$, $D$ represents the dataset containing pairs of data $(x, y)$ where $x$ is the input and $y$ is the corresponding output. And $S$ is the acquisition function used to select the next sample point (to be introduced in 2.2.3). $M$ is the model evaluated from the dataset $D$, Gaussian process model will be used in this project.
+\par From above, easy to know that bayesian optimization has the following steps:
+\begin{enumerate}
+	\item Model the objective function $f$ using the surrogate model, and define the prior of objective function (i.e.: sample points).
+	\item Use the acquisition function (EI function at this project) to find the promising point $\mathbf{x}_{i}$ that has the best performance on the surrogate model (i.e.: $x$ of the new point).
+	\item Calculate value of the objective function at that new point (i.e.: $y$).
+	\item Add point $(x, y)$ to the dataset $D$, update surrogate model with updated $D$
+	\item Repeat step 2-4 till reaches the maximum teration.
+\end{enumerate}	
+\par Here's a visualization of Bayesian optimization. We can see that, in each eveluation, the point where Experiment Improvement function reaches maximum was selected as the next sample point.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.21]{BayesianOptimization.png}
+	\caption{An example, visualizing bayesian optimization $^{[12]}$}
+	\label{fig:label}
+\end{figure}
+
+\subsection{Useful Conditions}
+\par Bayesian optimization techniques are most useful in the following type of functions:
+\begin{enumerate}
+	\item Objective function that expensive to evaluate: \\
+	This can be put down to two facts: Firstly, the majority of time taken is the time used for calculating the value of objective function in the newly-selected sample point at each iteration. Secondly, compared to grid search or random search, Bayesian optimization help us to select the promising point for evaluatin and thus we calculate fewer points. As a result, Bayesian optimization reduces both the time and number of times for calculations.
+	\item Objective function that is a black box function and we do not know its mathematical expression. 
+	\item Objective function that is derivative-free (or else we can use other methods like the gradient descent method)
+\end{enumerate}
+
+
+\section{Batched Bayesian Optimization}
+From the flowchart below, it cam be seen that there are three steps in traditional bayesian optimization:
+\begin{enumerate}
+	\item Using EI function to find the point.
+	\item Calculate objective function at that point.
+	\item Add point to sample and update the model.
+\end{enumerate}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=1.0]{traditional.png}
+	\caption{An iteration of traditional bayesian optimization}
+	\label{fig:label}
+\end{figure}
+
+Changing from traditional Bayesian optimization to batched Bayesian optimization is simple in theory, as it only requires the change in step 2: 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=1.0]{Fig1.png}
+	\caption{An iteration of batched Bayesian optimization}
+	\label{fig:label}
+\end{figure}
+
+
+In step 2, a batch of points will be selected at one time (suppose the batch size is $q$), and will be calculated in parallel, then in step 3, value of the opjective function at these $q$ points will be added to the sample at each iteration.
+
+
